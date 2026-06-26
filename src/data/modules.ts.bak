@@ -1,0 +1,1453 @@
+export interface ModuleSummary {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  duration: string;
+  lessons: number;
+  status: 'liberado' | 'bloqueado' | 'concluido';
+}
+
+export interface ModuleSection {
+  id: number;
+  title: string;
+  content: string;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+}
+
+export interface CourseModuleData {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  duration: string;
+  sections: ModuleSection[];
+  quiz: QuizQuestion[];
+}
+
+// Backward-compatible type alias
+export type Module = ModuleSummary;
+
+// Simplified module summary for grid/list display
+export const moduleSummaries: ModuleSummary[] = [
+  {
+    id: 1,
+    slug: 'introducao-ao-direito-previdenciario',
+    title: 'Introdução ao Direito Previdenciário',
+    description: 'Fundamentos históricos, princípios constitucionais, fontes normativas, custeio e organização administrativa da Previdência Social no Brasil.',
+    duration: '6h',
+    lessons: 6,
+    status: 'liberado',
+  },
+  {
+    id: 2,
+    slug: 'regime-geral-de-previdencia-social-rgps',
+    title: 'Regime Geral de Previdência Social (RGPS)',
+    description: 'Conceito, características, estrutura administrativa, financiamento, espécies de segurados, prestações previdenciárias e distinção dos demais regimes.',
+    duration: '6h',
+    lessons: 7,
+    status: 'liberado',
+  },
+  {
+    id: 3,
+    slug: 'qualidade-de-segurado-e-carencia',
+    title: 'Qualidade de Segurado e Carência',
+    description: 'Conceitos fundamentais de qualidade de segurado, período de graça, carência, perda e manutenção da condição de segurado e regras específicas para concessão de benefícios.',
+    duration: '6h',
+    lessons: 7,
+    status: 'liberado',
+  },
+  {
+    id: 4,
+    slug: 'segurados-e-dependentes',
+    title: 'Segurados e Dependentes',
+    description: 'Classificação dos segurados obrigatórios e facultativos, dependentes e inscrição no RGPS.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 5,
+    slug: 'beneficios-previdenciarios-visao-geral',
+    title: 'Benefícios Previdenciários: Visão Geral',
+    description: 'Visão geral dos benefícios administrados pelo INSS, espécies e requisitos genéricos.',
+    duration: '4h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 6,
+    slug: 'aposentadoria-por-idade-e-regras-de-transicao',
+    title: 'Aposentadoria por Idade e Regras de Transição',
+    description: 'Regras gerais, requisitos urbanos e rurais, cálculo do benefício e regras de transição pós-Reforma.',
+    duration: '4h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 7,
+    slug: 'aposentadoria-especial-e-documentacao',
+    title: 'Aposentadoria Especial e Documentação',
+    description: 'Agentes nocivos à saúde, comprovação de insalubridade/periculosidade e o papel do PPP.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 8,
+    slug: 'beneficios-por-incapacidade',
+    title: 'Benefícios por Incapacidade',
+    description: 'Auxílio por incapacidade temporária (auxílio-doença), aposentadoria por incapacidade permanente e auxílio-acidente.',
+    duration: '4h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 9,
+    slug: 'pensao-por-morte-e-auxilio-reclusao',
+    title: 'Pensão por Morte e Auxílio-Reclusão',
+    description: 'Requisitos, duração do benefício, cotas de cálculo e classes de dependentes.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 10,
+    slug: 'beneficio-de-prestacao-continuada-bpc-loas',
+    title: 'Benefício de Prestação Continuada (BPC/LOAS)',
+    description: 'O benefício assistencial ao idoso e à pessoa com deficiência, critérios de miserabilidade e judicialização.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 11,
+    slug: 'processo-administrativo-previdenciario-pap',
+    title: 'Processo Administrativo Previdenciário (PAP)',
+    description: 'Fases do PAP junto ao INSS, instrução de provas, dever de fundamentar e recursos ordinários.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+  {
+    id: 12,
+    slug: 'revisoes-de-beneficios-e-pratica-advocaticia',
+    title: 'Revisões de Benefícios e Prática Advocatícia',
+    description: 'Principais teses de revisão (Revisão da Vida Toda, etc.), prazos decadenciais e simulações.',
+    duration: '3h',
+    lessons: 1,
+    status: 'bloqueado',
+  },
+];
+
+// Full module data with text content (material didático) and quizzes
+export const courseModules: CourseModuleData[] = [
+  {
+    id: 1,
+    slug: 'introducao-ao-direito-previdenciario',
+    title: 'Introdução ao Direito Previdenciário',
+    description: 'Fundamentos históricos, conceitos básicos, princípios constitucionais, fontes normativas, custeio e organização administrativa da Previdência Social no Brasil.',
+    duration: '6h',
+    sections: [
+      {
+        id: 1,
+        title: 'Manutenção da Qualidade de Segurado e o Período de Graça',
+        content: `A **qualidade de segurado** é a condição jurídica atribuída à pessoa física que está filiada ao RGPS e que mantém esse vínculo enquanto exerce atividade remunerada (segurado obrigatório) ou contribui como facultativo, ou ainda durante o chamado **período de graça**.
+
+**O Período de Graça (Art. 15 da Lei n.º 8.213/91)**
+
+O período de graça é o lapso temporal no qual o segurado conserva todos os seus direitos perante o INSS, mesmo sem efetuar qualquer contribuição. Durante esse interregno, a qualidade de segurado é mantida integralmente para todos os fins legais.
+
+| Hipótese Legal | Prazo | Base Legal |
+| --- | --- | --- |
+| Segurado obrigatório que deixa de exercer atividade remunerada | 12 meses | Art. 15, II, Lei 8.213/91 |
+| Segurado em gozo de auxílio por incapacidade temporária | Até o término do benefício | Art. 15, I, Lei 8.213/91 |
+| Segurado facultativo que deixa de contribuir | 6 meses | Art. 15, § 2º, Lei 8.213/91 |
+| Segurado com mais de 120 contribuições sem perda da qualidade | 24 meses | Art. 15, § 1º, Lei 8.213/91 |
+| Segurado desempregado (comprovação involuntária) | 36 meses | Art. 15, § 2º, Lei 8.213/91 |
+| Segurado incorporado às Forças Armadas para serviço militar | 3 meses após a incorporação | Art. 15, V, Lei 8.213/91 |
+
+**Atenção:** O prazo de 36 meses para o segurado desempregado não exige mais registro formal no Sine, conforme jurisprudência consolidada do STJ. Basta a comprovação da situação de desemprego involuntário por outros meios de prova.
+
+**Prorrogação do Período de Graça**
+
+O período de graça pode ser ampliado quando mais de uma hipótese legal se aplicar ao mesmo segurado. Exemplo: um segurado que contribuiu por mais de 120 meses e está desempregado pode somar os prazos, totalizando até 48 meses de manutenção da qualidade de segurado.
+
+**Dica Prática:** Na prática, é fundamental orientar o cliente a não deixar o período de graça expirar sem retornar ao sistema. O segurado pode efetuar uma contribuição como facultativo para zerar o período e obter mais prazo, mesmo que ainda não tenha retornado ao mercado formal.
+
+**Perda da Qualidade de Segurado**
+
+A perda da qualidade de segurado ocorre no dia seguinte ao término do período de graça, sem a necessidade de qualquer ato formal do INSS. As consequências são imediatas.
+
+**Jurisprudência:** O STJ firmou entendimento de que a perda da qualidade de segurado não implica a perda das contribuições já realizadas. O segurado mantém o direito ao cômputo do tempo de contribuição e da carência já cumprida, mas precisa reingressar no sistema para requerer novos benefícios (AgInt no REsp 1.936.325/SP).
+
+**Artigo de Lei:** Art. 15 e §§ 1º a 5º da Lei n.º 8.213/1991; Art. 13 do Decreto n.º 3.048/1999.`
+      },
+      {
+        id: 2,
+        title: 'Carência: Conceito, Distinções e Regras Gerais',
+        content: `**Conceito Legal de Carência**
+
+A **carência** é o número mínimo de contribuições mensais indispensáveis para que o beneficiário faça jus ao benefício previdenciário, conforme definido no Art. 24 da Lei n.º 8.213/91.
+
+**Distinções Fundamentais**
+
+É essencial distinguir três conceitos que frequentemente são confundidos na prática:
+
+| Conceito | Definição | Natureza |
+| --- | --- | --- |
+| **Carência** | Número mínimo de contribuições mensais para fazer jus ao benefício | Quantitativo de meses contribuídos |
+| **Tempo de Contribuição** | Período total de atividade laboral com efetivo recolhimento | Período cronológico |
+| **Período de Graça** | Prazo sem contribuição em que se mantém a qualidade de segurado | Manutenção do vínculo jurídico |
+
+**Exemplo Prático:** Um segurado que contribuiu por 15 anos (180 meses) para a aposentadoria por idade cumpriu simultaneamente a carência (180 contribuições) e o tempo de contribuição (15 anos). Já um segurado que contribuiu por 10 anos (120 meses) e depois ficou 5 anos sem contribuir perdeu a qualidade de segurado, mas mantém as 120 contribuições para fins de carência — ao retornar, precisará de mais 60 contribuições para completar a carência.
+
+**Carência Mínima por Benefício**
+
+| Benefício | Carência Exigida | Base Legal |
+| --- | --- | --- |
+| Aposentadoria por Idade | 180 contribuições (15 anos) | Art. 25, II, Lei 8.213/91 |
+| Aposentadoria por Incapacidade Permanente | 12 contribuições | Art. 25, I, Lei 8.213/91 |
+| Aposentadoria Especial | 180 contribuições (15 anos) | Art. 25, II, c/c Art. 57, Lei 8.213/91 |
+| Aposentadoria Programada (tempo de contribuição) | 180 contribuições (15 anos) | Art. 25, II, Lei 8.213/91 |
+| Auxílio por Incapacidade Temporária (Auxílio-Doença) | 12 contribuições | Art. 25, I, Lei 8.213/91 |
+| Pensão por Morte | Nenhuma (carência dispensada) | Art. 26, I, Lei 8.213/91 |
+| Auxílio-Reclusão | 24 contribuições | Art. 25, III, Lei 8.213/91 |
+| Salário-Maternidade | 10 contribuições | Art. 25, III, Lei 8.213/91 |
+| Salário-Família | Nenhuma | Art. 26, II, Lei 8.213/91 |
+| Auxílio-Acidente | Nenhuma | Art. 26, III, Lei 8.213/91 |
+
+**Atenção:** A pensão por morte não exige carência, mas exige que o instituidor mantenha a qualidade de segurado na data do óbito ou esteja dentro do período de graça. Esse é um dos pontos mais cobrados em provas e concursos.
+
+**Dispensa de Carência**
+
+O Art. 26 da Lei 8.213/91 prevê hipóteses em que a carência é dispensada:
+
+1. Pensão por morte e auxílio-reclusão (para os dependentes)
+2. Salário-família
+3. Auxílio-acidente
+4. Reabilitação profissional
+5. Benefícios decorrentes de acidente de trabalho ou doença profissional
+6. Aposentadoria por incapacidade permanente decorrente de doença grave, contagiosa ou incurável (lista do Art. 151 da Lei 8.213/91)
+
+**Importante:** A dispensa de carência não dispensa a qualidade de segurado. Mesmo nos casos de dispensa, o segurado deve estar filiado ao RGPS e manter a qualidade de segurado na data do evento gerador do benefício.
+
+**Artigo de Lei:** Arts. 24 a 30 da Lei n.º 8.213/1991; Arts. 15 a 19 do Decreto n.º 3.048/1999.`
+      },
+      {
+        id: 3,
+        title: 'Perda da Qualidade de Segurado e suas Consequências',
+        content: `**Quando Ocorre a Perda da Qualidade**
+
+A perda da qualidade de segurado é automática e ocorre no dia seguinte ao término do período de graça sem que o segurado tenha retornado ao sistema.
+
+**Consequências Imediatas da Perda**
+
+1. **Suspensão do direito aos benefícios previdenciários** — enquanto não readquirir a qualidade, o segurado não pode requerer novos benefícios
+2. **Manutenção das contribuições anteriores** — o tempo de contribuição e a carência já cumprida não são perdidos
+3. **Necessidade de reingresso** — para requerer benefícios, o segurado precisa retornar ao sistema e cumprir novas regras de carência
+
+**O Reingresso e a Carência Residual (Art. 27 da Lei 8.213/91)**
+
+Quando o segurado perde a qualidade e posteriormente retorna ao sistema, aplica-se a regra da **carência residual**:
+
+| Situação | Carência Exigida |
+| --- | --- |
+| Perda da qualidade e reingresso | Metade da carência original do benefício |
+| Reingresso antes da perda da qualidade | Carência já cumprida + novas contribuições até atingir o mínimo |
+| Segurado que nunca perdeu a qualidade | Carência integral exigida para cada benefício |
+
+**Exemplo Prático de Carência Residual:**
+
+Um segurado que contribuiu por 10 anos (120 contribuições) perdeu a qualidade de segurado e ficou 2 anos sem contribuir. Ao retornar, para requerer aposentadoria por idade (que exige 180 contribuições):
+
+- Carência original: 180 contribuições
+- Carência já cumprida: 120 contribuições (mantidas mesmo após a perda)
+- Carência residual exigida: metade de 180 = 90 contribuições
+- Total necessário após reingresso: 90 contribuições (e não 180)
+
+**Atenção:** Esse cálculo é uma simplificação didática. Na prática, o INSS aplica o Art. 27 da Lei 8.213/91 e o segurado que perdeu a qualidade deve cumprir metade da carência exigida para o benefício pretendido, contada a partir do novo ingresso.
+
+**Direitos Mantidos e Direitos Suspensos**
+
+| Direito | Efeito da Perda |
+| --- | --- |
+| Tempo de contribuição acumulado | Mantido integralmente |
+| Carência já cumprida | Mantida, mas exige-se carência residual |
+| Qualidade de segurado | Suspensa até nova contribuição |
+| Acesso a benefícios | Suspenso até readquirir a qualidade |
+| Período de graça existente | Encerrado no momento da perda |
+
+**Jurisprudência:** O STJ consolidou o entendimento de que o segurado que perde a qualidade de segurado não precisa refazer integralmente a carência para todos os benefícios. A carência residual de 50% é a regra, salvo disposição legal mais benéfica (Súmula 33 da TNU).
+
+**Dica Prática:** Para o advogado previdenciarista, é essencial verificar no CNIS do cliente se houve perda da qualidade de segurado e, em caso positivo, calcular corretamente a carência residual aplicável. Um erro nesse cálculo pode resultar em indeferimento do benefício.
+
+**Como Readquirir a Qualidade de Segurado**
+
+A readquisição da qualidade de segurado ocorre com o simples retorno ao exercício de atividade remunerada (para segurados obrigatórios) ou com o pagamento de uma contribuição como segurado facultativo (para quem não exerce atividade remunerada).
+
+**Atenção:** O pagamento de uma única contribuição como facultativo já restabelece a qualidade de segurado, mas a carência para benefícios específicos dependerá do número de contribuições efetivamente realizadas após o reingresso.
+
+**Artigo de Lei:** Art. 15, § 4º e Art. 27 da Lei n.º 8.213/1991; Súmula 33 da Turma Nacional de Uniformização dos Juizados Especiais Federais.`
+      },
+      {
+        id: 4,
+        title: 'Cômputo e Averbação do Período de Carência',
+        content: `**Como é Contada a Carência**
+
+A carência é contada mês a mês, considerando as contribuições efetivamente recolhidas ao RGPS. O cômputo obedece a regras específicas estabelecidas no Art. 27 da Lei n.º 8.213/91 e nos Arts. 19 a 21 do Decreto n.º 3.048/1999.
+
+**Regras de Cômputo**
+
+1. **Contribuições mensais** — cada mês em que houver efetivo recolhimento conta como uma contribuição para a carência
+2. **Contribuições em atraso** — podem ser computadas desde que pagas dentro do prazo de decadência
+3. **Compensação de contribuições** — o segurado pode compensar contribuições em atraso para completar a carência
+4. **Contribuições para o segurado facultativo** — contam normalmente para a carência
+
+| Tipo de Período | Cômputo para Carência | Base Legal |
+| --- | --- | --- |
+| Período de trabalho com CTPS assinada | Sim | Art. 27, I, Lei 8.213/91 |
+| Período como contribuinte individual com recolhimento | Sim | Art. 27, II, Lei 8.213/91 |
+| Período de graça | Não (não há contribuição) | Art. 15, Lei 8.213/91 |
+| Período militar obrigatório (remunerado) | Sim | Art. 55, III, Lei 8.213/91 |
+| Período rural anterior a 1991 | Sim (desde que comprovado) | Art. 55, § 2º, Lei 8.213/91 |
+| Período de benefício por incapacidade intercalado | Sim | Art. 27, I, Lei 8.213/91 |
+
+**Importante:** O período de gozo de auxílio por incapacidade temporária (auxílio-doença), quando intercalado com períodos de atividade, conta como tempo de contribuição e, portanto, para a carência.
+
+**A Averbação de Períodos Anteriores**
+
+A averbação é o ato administrativo pelo qual o INSS reconhece e registra períodos de contribuição ou atividade anteriores, permitindo seu cômputo na carência e no tempo de contribuição.
+
+**Períodos que podem ser averbados:**
+
+- Tempo de serviço público com Certidão de Tempo de Contribuição (CTC)
+- Tempo de atividade rural anterior a 1991
+- Tempo de atividade especial convertido em tempo comum
+- Tempo de contribuição em outros regimes (RPPS)
+- Tempo de serviço militar (remunerado)
+- Período de atividade no exterior (com acordo internacional)
+
+**Dica Prática:** A averbação de períodos anteriores pode ser decisiva para completar a carência de um cliente que está próximo de se aposentar. Sempre verifique se o cliente possui períodos averbáveis não registrados no CNIS.
+
+**Acordos Internacionais de Previdência**
+
+O Brasil possui acordos de previdência com diversos países, permitindo a soma de períodos de contribuição para fins de carência:
+
+| País/Bloco | Acordo | Períodos Somáveis |
+| --- | --- | --- |
+| Portugal | Acordo Brasil-Portugal (Decreto n.º 7.468/2011) | Sim |
+| Japão | Acordo Brasil-Japão (Decreto n.º 6.762/2009) | Sim |
+| Espanha | Acordo Brasil-Espanha (Decreto n.º 5.502/2005) | Sim |
+| Itália | Acordo Brasil-Itália (Decreto n.º 88.292/1983) | Sim |
+| Alemanha | Acordo Brasil-Alemanha | Sim |
+| Uruguai | Acordo Multilateral do Mercosul | Sim |
+
+**Jurisprudência:** O STJ reconhece que os períodos de contribuição no exterior, quando amparados por acordo internacional, devem ser computados para fins de carência no Brasil, desde que o segurado comprove o efetivo recolhimento das contribuições no país estrangeiro.
+
+**Atenção:** Os acordos internacionais não dispensam o cumprimento da carência mínima no Brasil. O segurado deve ter, no mínimo, 180 contribuições no Brasil para aposentadoria por idade, podendo somar períodos no exterior para completar o tempo de contribuição.
+
+**Artigo de Lei:** Arts. 27 a 30 da Lei n.º 8.213/1991; Arts. 19 a 21 do Decreto n.º 3.048/1999; Decretos legislativos que ratificam acordos internacionais.`
+      },
+      {
+        id: 5,
+        title: 'Carência Específica por Tipo de Benefício e Exceções',
+        content: `Cada benefício previdenciário possui regras específicas de carência, que devem ser analisadas individualmente para a correta orientação do cliente. Além disso, existem exceções importantes que dispensam ou reduzem a carência em situações específicas.
+
+**Análise Detalhada por Benefício**
+
+**1. Aposentadoria por Idade**
+- **Carência:** 180 contribuições (15 anos)
+- **Exceções:** Trabalhadores rurais (segurados especiais) — carência de 180 contribuições, mas computada de forma diferenciada (por ano safra)
+- **Regra de transição:** Para segurados já filiados antes da EC 103/2019, o tempo de contribuição mínimo para homens é de 15 anos (mantido)
+
+**2. Auxílio por Incapacidade Temporária (Auxílio-Doença)**
+- **Carência:** 12 contribuições
+- **Exceções:** Dispensa de carência para acidente de qualquer natureza, doenças graves listadas no Art. 151 da Lei 8.213/91 (tuberculose ativa, hanseníase, alienação mental, neoplasia maligna, cegueira, paralisia irreversível, cardiopatia grave, doença de Parkinson, esclerose múltipla, entre outras)
+
+**3. Aposentadoria por Incapacidade Permanente (Invalidez)**
+- **Carência:** 12 contribuições
+- **Exceções:** Dispensa quando decorrente de acidente de trabalho, doença profissional ou doença grave listada no Art. 151
+
+**4. Auxílio-Reclusão**
+- **Carência:** 24 contribuições
+- **Exceções:** Nenhuma
+
+**5. Salário-Maternidade**
+- **Carência:** 10 contribuições
+- **Exceções:** Para a segurada especial (rural), a carência é de 10 contribuições, mas pode ser comprovada pela atividade rural
+
+**6. Pensão por Morte**
+- **Carência:** Nenhuma
+- **Exceções:** O instituidor deve ter qualidade de segurado ou estar em período de graça na data do óbito
+
+**7. Auxílio-Acidente**
+- **Carência:** Nenhuma
+- **Exceções:** O segurado deve ter qualidade de segurado na data do acidente
+
+**Tabela Completa de Carências e Exceções**
+
+| Benefício | Carência Padrão | Dispensa de Carência | Observações |
+| --- | --- | --- | --- |
+| Aposentadoria por Idade | 180 contribuições | Não há | Rural: 180 contribuições especiais |
+| Aposentadoria por Incapacidade Permanente | 12 contribuições | Acidente, doença grave | Perícia médica obrigatória |
+| Aposentadoria Especial | 180 contribuições | Não há | Exige PPP completo |
+| Aposentadoria Programada | 180 contribuições | Não há | Extinta para novos filiados |
+| Auxílio Incapacidade Temporária | 12 contribuições | Acidente, doença grave | Perícia médica obrigatória |
+| Pensão por Morte | Nenhuma | — | Exige qualidade de segurado |
+| Auxílio-Reclusão | 24 contribuições | Não há | Segurado de baixa renda |
+| Auxílio-Acidente | Nenhuma | — | Caráter indenizatório |
+| Salário-Maternidade | 10 contribuições | Não há | Empregada doméstica: 10 contribuições |
+| Salário-Família | Nenhuma | — | Renda familiar limitada |
+| Reabilitação Profissional | Nenhuma | — | Serviço, não benefício |
+
+**Importante:** A lista de doenças graves para dispensa de carência (Art. 151 da Lei 8.213/91) é taxativa, mas o STJ tem flexibilizado sua interpretação em casos excepcionais. A doença deve ser contemporânea ao requerimento do benefício.
+
+**Dica Prática:** Quando o cliente tiver uma doença grave listada no Art. 151, o advogado deve instruir o pedido administrativo com laudos médicos detalhados que comprovem a data de início da doença e sua relação com a incapacidade. A dispensa de carência não dispensa a comprovação da incapacidade.
+
+**Jurisprudência:** O STJ, no REsp 1.842.415/RS, firmou que a dispensa de carência para doenças graves (Art. 151 da Lei 8.213/91) exige que a doença seja diagnosticada antes do requerimento e que a incapacidade decorra diretamente dela, não sendo suficiente o simples diagnóstico.
+
+**Artigo de Lei:** Arts. 24, 25, 26 e 151 da Lei n.º 8.213/1991; Art. 19 do Decreto n.º 3.048/1999.`
+      },
+      {
+        id: 6,
+        title: 'Manutenção da Qualidade e Planejamento Previdenciário',
+        content: `A manutenção da qualidade de segurado e o cumprimento da carência são elementos centrais do **planejamento previdenciário**. O advogado especializado deve orientar o cliente sobre estratégias para preservar seus direitos e otimizar o acesso aos benefícios.
+
+**Estratégias para Manutenção da Qualidade**
+
+**1. Contribuição como Segurado Facultativo**
+- Ideal para quem deixou o mercado de trabalho formal
+- Alíquotas de 5% (baixa renda), 11% (plano simplificado) ou 20% (plano normal)
+- Permite manter a qualidade sem interrupção
+- Útil durante períodos de desemprego, estudo ou doença
+
+**2. Pagamento de Contribuições em Atraso**
+- Possível para contribuintes individuais e facultativos
+- Prazo decadencial de 5 anos para contribuições em atraso
+- Evita a perda da qualidade durante o período de graça
+- Necessário comprovar a atividade no período
+
+**3. Planejamento do Período de Graça**
+- Conhecer o prazo exato aplicável ao caso
+- Evitar a expiração sem uma nova contribuição
+- Utilizar a soma de prazos quando houver múltiplas hipóteses
+
+**4. Retorno ao Mercado de Trabalho**
+- O simples retorno a atividade remunerada restabelece a qualidade
+- Mesmo um período curto de trabalho já reativa o vínculo
+- Orientar o cliente sobre a data de retorno e o registro em CTPS
+
+**Tabela de Planejamento por Perfil**
+
+| Perfil do Cliente | Estratégia Recomendada | Objetivo |
+| --- | --- | --- |
+| Trabalhador formal demitido | Verificar período de graça + contribuição facultativa | Evitar perda da qualidade |
+| Autônomo com renda variável | Contribuição como facultativo nos meses sem renda | Manter carência contínua |
+| Estudante maior de 16 anos | Contribuição facultativa com alíquota de 5% ou 11% | Iniciar carência cedo |
+| Dono de casa sem renda | Segurado facultativo de baixa renda (5%) | Acesso a aposentadoria por idade |
+| MEI | Recolhimento mensal do DAS | Manter qualidade e carência |
+| Trabalhador rural | Comprovação da atividade safra a safra | Carência rural especial |
+
+**Cálculo da Carência para Planejamento**
+
+Para o planejamento previdenciário, o advogado deve calcular quantas contribuições o cliente já possui e quantas ainda são necessárias para cada benefício:
+
+**Fórmula prática:**
+- Carência necessária = Carência exigida — Contribuições já realizadas
+- Considerar a carência residual (50%) se houve perda da qualidade
+- Verificar períodos averbáveis não contabilizados
+
+**Exemplo de Planejamento:**
+
+Maria, 55 anos, contribuiu por 8 anos (96 contribuições) como empregada, depois ficou 3 anos desempregada sem contribuir, e agora quer se planejar para a aposentadoria por idade (62 anos).
+
+**Análise:**
+1. Perdeu a qualidade de segurado? Sim (período de graça de 12 ou 24 meses já expirou)
+2. Carência já cumprida: 96 contribuições (mantidas)
+3. Carência necessária para aposentadoria por idade: 180 contribuições
+4. Carência residual: 180 ÷ 2 = 90 contribuições (após reingresso)
+5. Contribuições que precisa fazer: 90 contribuições = 7,5 anos
+6. Idade atual: 55 anos → se contribuir por 7,5 anos, terá 62,5 anos e cumprirá idade e carência
+
+**Dica Prática:** No planejamento previdenciário, sempre verifique se o cliente possui períodos de contribuição anteriores a 1994, que podem ser excluídos do cálculo do benefício (descartados os 20% menores), ou incluídos na Revisão da Vida Toda, conforme o caso.
+
+**Ferramentas de Simulação**
+
+O advogado pode utilizar as seguintes ferramentas para simulações:
+- **CNIS completo** — base de dados oficial do INSS
+- **Site Meu INSS** — simulador de tempo de contribuição
+- **Planilhas de cálculos** — para projeções de carência e valor do benefício
+- **Sistemas jurídicos especializados** — com cálculo de carência residual
+
+**Atenção:** A simulação de carência no Meu INSS considera automaticamente a carência já cumprida e projeta a data de cumprimento. No entanto, o sistema pode não considerar corretamente a carência residual para quem perdeu a qualidade. O advogado deve verificar manualmente.
+
+**Artigo de Lei:** Arts. 14, 15 e 27 da Lei n.º 8.213/1991; Súmula 33 da TNU.`
+      },
+      {
+        id: 7,
+        title: 'Controvérsias Atuais sobre Qualidade de Segurado e Carência',
+        content: `O tema da qualidade de segurado e da carência é objeto de constantes debates doutrinários e jurisprudenciais. Conhecer as principais controvérsias é essencial para a atuação estratégica na área previdenciária.
+
+**1. A Comprovação do Desemprego Involuntário**
+
+O Art. 15, § 2º da Lei 8.213/91 prevê o prazo de 36 meses de período de graça para o segurado comprovadamente desempregado. A controvérsia reside na forma de comprovação:
+
+| Entendimento | Exigência | Fundamento |
+| --- | --- | --- |
+| INSS (estrito) | Exige registro no Sine (Sistema Nacional de Emprego) | Instrução Normativa INSS |
+| STJ (flexível) | Aceita outros meios de prova (declaração, extratos, testemunhas) | REsp 1.293.693/RS |
+| Doutrina majoritária | Basta a declaração do trabalhador corroborada por indícios | Princípio do formalismo moderado |
+
+**Jurisprudência:** O STJ consolidou que a ausência de registro no Sine não impede a comprovação do desemprego involuntário por outros meios de prova (AgInt no AREsp 2.016.042/SP).
+
+**2. A Carência Residual e a Teoria da Reafiliação**
+
+A aplicação da carência residual (Art. 27 da Lei 8.213/91) gera debates sobre o momento exato em que o segurado readquire a qualidade e a partir de quando a nova carência começa a ser contada.
+
+**Posições divergentes:**
+- **Posição 1:** A carência residual começa a contar da data do primeiro pagamento após o reingresso
+- **Posição 2:** A carência residual começa a contar do exercício da atividade, mesmo sem o pagamento imediato
+- **Posição 3:** A carência residual exige que o segurado tenha efetuado pelo menos uma contribuição após o reingresso
+
+**3. A Perda da Qualidade e o Direito Adquirido ao Benefício**
+
+Uma das questões mais relevantes é se o segurado que preencheu todos os requisitos para a aposentadoria antes da perda da qualidade mantém o direito adquirido ao benefício.
+
+| Caso Concreto | Entendimento |
+| --- | --- |
+| Segurado cumpriu carência e tempo de contribuição, mas não requereu o benefício antes da perda da qualidade | Mantém o direito adquirido, pois os requisitos foram preenchidos antes da perda |
+| Segurado perdeu a qualidade antes de cumprir a carência | Não tem direito adquirido; precisa reingressar e cumprir carência residual |
+| Segurado requereu o benefício após a perda mas tinha direito adquirido anterior | Favorável ao segurado (Súmula 41/TNU) |
+
+**Súmula 41 da TNU:** O direito à aposentadoria por tempo de contribuição, com base no art. 53, I, da Lei n. 8.213/91, não é prejudicado pela perda da qualidade de segurado, desde que o segurado preencha os requisitos legais antes da perda.
+
+**4. A Carência do Segurado Especial (Trabalhador Rural)**
+
+A comprovação da carência para o segurado especial é uma das áreas mais litigiosas:
+
+| Aspecto | Regra | Problema Prático |
+| --- | --- | --- |
+| Carência rural | 180 contribuições (contadas por ano safra) | Dificuldade de comprovação documental |
+| Início de prova material | Documentos que comprovem a atividade rural | Ausência de documentos formais |
+| Prova testemunhal | Admitida como complemento | Necessita de início de prova material |
+
+**5. A Contagem de Períodos de Atividade Especial para Carência**
+
+| Aspecto | Entendimento Atual |
+| --- | --- |
+| Conversão de tempo especial para comum | Sim, com multiplicadores (1,4 homem / 1,2 mulher) |
+| Carência especial para aposentadoria especial | Carência de 180 contribuições independentemente do tempo de exposição |
+| Período especial não averbado | Pode ser averbado a qualquer tempo, desde que comprovado |
+
+**6. A Aplicação da Carência aos Segurados Facultativos**
+
+Uma controvérsia relevante é a restrição aos benefícios para o segurado facultativo de baixa renda (alíquota de 5%):
+
+| Alíquota | Benefícios com Direito |
+| --- | --- |
+| 5% (baixa renda) | Aposentadoria por idade e pensão por morte |
+| 11% (plano simplificado) | Todos os benefícios, exceto aposentadoria programada |
+| 20% (plano normal) | Todos os benefícios |
+
+**Dica Prática:** O segurado facultativo que contribui com 5% ou 11% pode complementar a contribuição para atingir a alíquota de 20%, desde que faça o recolhimento complementar dentro do prazo legal. Isso permite o acesso à aposentadoria programada.
+
+**Atenção:** O cenário de constantes mudanças normativas e jurisprudenciais exige que o profissional da área previdenciária mantenha atualização permanente. As súmulas e os precedentes vinculantes dos tribunais superiores devem ser consultados regularmente.
+
+**Artigo de Lei:** Arts. 15, 24, 27 e 151 da Lei n.º 8.213/1991; Súmulas 33 e 41 da Turma Nacional de Uniformização; Decreto n.º 3.048/1999.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'O que é o período de graça no âmbito do RGPS?',
+        options: [
+          'O período em que o INSS concede um desconto nas contribuições do segurado',
+          'O lapso temporal em que o segurado mantém a qualidade de segurado sem efetuar contribuições',
+          'O prazo para o segurado pagar contribuições em atraso sem multa',
+          'O período de carência para a concessão do auxílio-doença'
+        ],
+        correctAnswer: 1,
+        explanation: 'O período de graça é o lapso temporal previsto em lei (Art. 15 da Lei 8.213/91) durante o qual o segurado conserva todos os seus direitos perante o INSS mesmo sem efetuar qualquer contribuição financeira.'
+      },
+      {
+        question: 'Qual a diferença fundamental entre carência e tempo de contribuição?',
+        options: [
+          'Carência é o número mínimo de contribuições mensais para o benefício; tempo de contribuição é o período total de atividade laboral contributiva',
+          'Carência e tempo de contribuição são sinônimos legais',
+          'Tempo de contribuição é o número mínimo de contribuições; carência é o período total',
+          'Carência só se aplica a segurados facultativos'
+        ],
+        correctAnswer: 0,
+        explanation: 'Carência é o número mínimo de contribuições mensais indispensáveis para a concessão de cada benefício (Art. 24, Lei 8.213/91). Tempo de contribuição é o período total de atividade laboral com efetivo recolhimento. Eles não se confundem.'
+      },
+      {
+        question: 'Qual a carência exigida para o auxílio por incapacidade temporária (antigo auxílio-doença)?',
+        options: [
+          '6 contribuições mensais',
+          '12 contribuições mensais',
+          '24 contribuições mensais',
+          '180 contribuições mensais'
+        ],
+        correctAnswer: 1,
+        explanation: 'O auxílio por incapacidade temporária exige carência de 12 contribuições mensais, conforme o Art. 25, I da Lei 8.213/91. A carência é dispensada em casos de acidente de qualquer natureza ou doenças graves listadas no Art. 151.'
+      },
+      {
+        question: 'O que ocorre com a carência já cumprida quando o segurado perde a qualidade de segurado?',
+        options: [
+          'A carência é totalmente perdida e o segurado começa do zero',
+          'A carência é mantida, mas o segurado precisa cumprir metade da carência original ao reingressar',
+          'A carência é reduzida pela metade automaticamente',
+          'O INSS descarta 50% das contribuições mais baixas'
+        ],
+        correctAnswer: 1,
+        explanation: 'A perda da qualidade de segurado não elimina as contribuições anteriores. A carência já cumprida é mantida, mas ao reingressar, o segurado precisa cumprir metade da carência original do benefício pretendido (Art. 27 da Lei 8.213/91).'
+      },
+      {
+        question: 'Qual benefício previdenciário NÃO exige carência, mas exige qualidade de segurado do instituidor?',
+        options: [
+          'Auxílio-reclusão',
+          'Salário-maternidade',
+          'Pensão por morte',
+          'Auxílio por incapacidade temporária'
+        ],
+        correctAnswer: 2,
+        explanation: 'A pensão por morte não exige carência (Art. 26, I, Lei 8.213/91), mas exige que o instituidor mantenha a qualidade de segurado na data do óbito ou esteja dentro do período de graça. Os demais benefícios listados exigem carência específica.'
+      },
+      {
+        question: 'Qual o prazo de período de graça para o segurado que comprovadamente se encontra em situação de desemprego involuntário?',
+        options: [
+          '12 meses',
+          '24 meses',
+          '36 meses',
+          '48 meses'
+        ],
+        correctAnswer: 2,
+        explanation: 'O segurado desempregado tem direito a 36 meses de período de graça, conforme o Art. 15, § 2º da Lei 8.213/91. Esse prazo pode ser acrescido de 12 meses extras se o segurado tiver mais de 120 contribuições, totalizando até 48 meses.'
+      }
+    ]
+  },
+  {
+    id: 4,
+    slug: 'segurados-e-dependentes',
+    title: 'Segurados e Dependentes',
+    description: 'Classificação dos segurados obrigatórios e facultativos, dependentes e inscrição no RGPS.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'Classificação dos Segurados e Dependentes',
+        content: `Os segurados do RGPS dividem-se em duas grandes categorias: segurados obrigatórios e segurados facultativos.
+
+**Segurados Obrigatórios (Art. 11 da Lei 8.213/91):**
+
+1. **Empregado** – Pessoa física que presta serviço de natureza urbana ou rural a empresa, em caráter não eventual, sob subordinação e mediante remuneração.
+   - Inclui o trabalhador temporário, o diretor empregado e o aprendiz.
+
+2. **Empregado Doméstico** – Pessoa física que presta serviços de forma contínua, subordinada, onerosa e pessoal a pessoa ou família no âmbito residencial, por mais de 2 dias por semana.
+   - Regido pela Lei Complementar nº 150/2015 (PEC das Domésticas).
+
+3. **Contribuinte Individual** – Pessoa física que exerce atividade econômica por conta própria, sem subordinação.
+   - Inclui autônomos, empresários, sócios de empresas, trabalhadores de cooperativas, motoristas de aplicativo, entre outros.
+
+4. **Trabalhador Avulso** – Pessoa física que presta serviço a diversas empresas, sem vínculo empregatício, com intermediação de sindicato ou órgão gestor de mão de obra (OGMO).
+   - Exemplos: estivadores, carregadores, ensacadores de café.
+
+5. **Segurado Especial** – Produtor rural em regime de economia familiar, pescador artesanal e seus cônjuges, que exercem atividade sem contratação de empregados permanentes.
+   - Contribuição incidente sobre a comercialização da produção.
+
+**Segurado Facultativo (Art. 14 da Lei 8.213/91):**
+
+É a pessoa física maior de 16 anos que não exerce atividade remunerada obrigatória, mas opta por contribuir ao RGPS para manter a qualidade de segurado e ter acesso aos benefícios previdenciários.
+
+Exemplos: estudantes, donas de casa, desempregados que optam por continuar contribuindo, estagiários não remunerados, bolsistas.
+
+O segurado facultativo pode contribuir com alíquotas de 5% (facultativo de baixa renda, inscrito no Cadúnico), 11% (plano simplificado) ou 20% (plano normal).
+
+**Dependentes (Art. 16 da Lei 8.213/91):**
+
+Os dependentes são classificados em três classes, com presunção legal de dependência econômica:
+
+- **Classe I:** Cônjuge, companheiro(a) e filhos menores de 21 anos (ou inválidos, ou com deficiência).
+- **Classe II:** Pais do segurado.
+- **Classe III:** Irmãos menores de 21 anos ou inválidos.
+
+A dependência econômica é presumida para a Classe I e deve ser comprovada para as Classes II e III. A existência de dependente de classe anterior exclui os das classes subsequentes.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Quem pode se filiar como Segurado Facultativo?',
+        options: [
+          'O estudante maior de 16 anos que não exerce atividade remunerada',
+          'O trabalhador doméstico registrado',
+          'O autônomo com renda regular',
+          'O servidor público regido por RPPS'
+        ],
+        correctAnswer: 0,
+        explanation: 'O segurado facultativo é aquele que não exerce atividade remunerada obrigatória, como estudantes maiores de 16 anos, donas de casa, entre outros.'
+      },
+      {
+        question: 'Qual a alíquota mínima de contribuição do segurado facultativo de baixa renda?',
+        options: [
+          '5%',
+          '11%',
+          '20%',
+          '7,5%'
+        ],
+        correctAnswer: 0,
+        explanation: 'O segurado facultativo de baixa renda, inscrito no Cadúnico, pode contribuir com alíquota reduzida de 5% sobre o salário mínimo, tendo direito apenas aos benefícios de aposentadoria por idade e pensão por morte.'
+      }
+    ]
+  },
+  {
+    id: 5,
+    slug: 'beneficios-previdenciarios-visao-geral',
+    title: 'Benefícios Previdenciários: Visão Geral',
+    description: 'Visão geral dos benefícios administrados pelo INSS, espécies e requisitos genéricos.',
+    duration: '4h',
+    sections: [
+      {
+        id: 1,
+        title: 'Rol de Benefícios Previdenciários',
+        content: `O Regime Geral de Previdência Social concede diversos benefícios, que podem ser classificados em previdenciários (contributivos) e assistenciais (não contributivos).
+
+**Benefícios Previdenciários (contributivos):**
+
+1. **Aposentadoria por Idade** – Concedida ao segurado que completa 65 anos (homem) ou 62 anos (mulher), com carência de 180 contribuições (após EC 103/2019).
+
+2. **Aposentadoria por Tempo de Contribuição** – Extinta para novos segurados após a EC 103/2019. Mantida para quem já era segurado antes da reforma, através de regras de transição.
+
+3. **Aposentadoria Especial** – Concedida ao segurado exposto a agentes nocivos (físicos, químicos ou biológicos) por 15, 20 ou 25 anos, dependendo do agente.
+
+4. **Aposentadoria por Incapacidade Permanente (Invalidez)** – Concedida ao segurado que for considerado permanentemente incapaz para o trabalho, com carência de 12 contribuições (dispensada em alguns casos).
+
+5. **Auxílio por Incapacidade Temporária (Auxílio-Doença)** – Concedido ao segurado que ficar temporariamente incapacitado para o trabalho, com carência de 12 contribuições.
+
+6. **Auxílio-Acidente** – Concedido ao segurado que sofreu acidente e ficou com sequelas que reduzem a capacidade laboral. Tem caráter indenizatório e pode ser acumulado com salário.
+
+7. **Pensão por Morte** – Concedida aos dependentes do segurado falecido. O valor depende do número de dependentes e da forma de cálculo.
+
+8. **Auxílio-Reclusão** – Concedido aos dependentes do segurado de baixa renda que for recolhido à prisão.
+
+9. **Salário-Maternidade** – Concedido à segurada gestante, adotante ou que tenha obtido guarda judicial para fins de adoção.
+
+10. **Salário-Família** – Concedido ao segurado de baixa renda que tenha filhos menores de 14 anos ou inválidos.
+
+**Benefício Assistencial (não contributivo):**
+
+**Benefício de Prestação Continuada (BPC/LOAS)** – Concedido ao idoso (65+) e à pessoa com deficiência de baixa renda. Não exige contribuições prévias e equivale a um salário mínimo mensal.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Qual dos seguintes é um benefício de natureza exclusivamente assistencial (não contributiva)?',
+        options: [
+          'Aposentadoria por idade',
+          'Pensão por morte',
+          'Benefício de Prestação Continuada (BPC/LOAS)',
+          'Auxílio-doença previdenciário'
+        ],
+        correctAnswer: 2,
+        explanation: 'O BPC/LOAS é um benefício de caráter assistencial, pago a idosos ou deficientes de baixa renda, não exigindo qualidade de segurado ou carência contributiva.'
+      },
+      {
+        question: 'Qual o requisito de carência geral para o auxílio por incapacidade temporária (auxílio-doença)?',
+        options: [
+          '6 contribuições mensais',
+          '12 contribuições mensais',
+          '24 contribuições mensais',
+          '180 contribuições mensais'
+        ],
+        correctAnswer: 1,
+        explanation: 'O auxílio-doença exige carência de 12 contribuições mensais, salvo nas exceções legais (acidente de qualquer natureza, doenças graves listadas em lei).'
+      }
+    ]
+  },
+  {
+    id: 6,
+    slug: 'aposentadoria-por-idade-e-regras-de-transicao',
+    title: 'Aposentadoria por Idade e Regras de Transição',
+    description: 'Regras gerais, requisitos urbanos e rurais, cálculo do benefício e regras de transição pós-Reforma.',
+    duration: '4h',
+    sections: [
+      {
+        id: 1,
+        title: 'Aposentadoria por Idade Pós-Reforma',
+        content: `A Emenda Constitucional 103/2019 (Reforma da Previdência) alterou significativamente as regras da aposentadoria por idade.
+
+**Regra Definitiva (para quem se filiou ao RGPS após 13/11/2019):**
+
+- **Homens:** 65 anos de idade + 20 anos de contribuição (carência de 180 meses)
+- **Mulheres:** 62 anos de idade + 15 anos de contribuição (carência de 180 meses)
+
+Para os homens, o tempo mínimo de contribuição de 20 anos foi uma mudança importante, pois antes eram 15 anos (o aumento será gradual, aplicando-se apenas para novos filiados).
+
+**Regras de Transição (para quem já era segurado antes da EC 103/2019):**
+
+1. **Sistema de Pontos (Regra 86/96):** Soma da idade + tempo de contribuição. Mulher: 86 pontos + 30 anos de contribuição. Homem: 96 pontos + 35 anos de contribuição. A pontuação aumenta 1 ponto por ano a partir de 2020.
+
+2. **Idade Mínima Progressiva:** Exige idade mínima que aumenta gradativamente. Mulher: 56 anos (2019) + 30 anos de contribuição, subindo 6 meses por ano até 62 anos. Homem: 61 anos (2019) + 35 anos de contribuição, subindo 6 meses por ano até 65 anos.
+
+3. **Pedágio 50%:** Para quem estava a 2 anos ou menos de cumprir o tempo mínimo de contribuição na data da reforma. Exige cumprir o tempo que faltava + 50% desse período.
+
+4. **Pedágio 100%:** Exige idade mínima (57 anos mulher / 60 anos homem) + tempo de contribuição total (30/35 anos) + pedágio de 100% do tempo que faltava na data da reforma.
+
+**Cálculo do Benefício (pós-reforma):**
+
+- 60% da média de todos os salários de contribuição desde julho/1994
+- + 2% para cada ano que exceder 20 anos de contribuição (homens) ou 15 anos (mulheres)
+- A média é calculada sobre 100% dos salários de contribuição (sem descarte dos 20% menores)
+
+**Aposentadoria Rural:**
+
+Para trabalhadores rurais (segurados especiais), a idade mínima é reduzida em 5 anos: 60 anos para homens e 55 anos para mulheres, com carência de 180 contribuições.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Qual a idade mínima definitiva estabelecida para as mulheres se aposentarem por idade pós-reforma (após o fim da transição)?',
+        options: [
+          '60 anos',
+          '62 anos',
+          '65 anos',
+          '57 anos'
+        ],
+        correctAnswer: 1,
+        explanation: 'A Emenda Constitucional 103/2019 consolidou a idade mínima da aposentadoria por idade urbana para mulheres em 62 anos completos.'
+      },
+      {
+        question: 'Qual o percentual inicial da fórmula de cálculo da aposentadoria por idade no RGPS pós-reforma?',
+        options: [
+          '50% da média',
+          '60% da média',
+          '70% da média',
+          '100% da média'
+        ],
+        correctAnswer: 1,
+        explanation: 'O cálculo inicia em 60% da média de todos os salários de contribuição, acrescendo 2% para cada ano que exceder 20 anos (homens) ou 15 anos (mulheres) de contribuição.'
+      }
+    ]
+  },
+  {
+    id: 7,
+    slug: 'aposentadoria-especial-e-documentacao',
+    title: 'Aposentadoria Especial e Documentação',
+    description: 'Agentes nocivos à saúde, comprovação de insalubridade/periculosidade e o papel do PPP.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'Agentes Nocivos e o Perfil Profissiográfico Previdenciário (PPP)',
+        content: `A aposentadoria especial é um dos benefícios mais importantes do RGPS, concedida aos segurados que exercem atividades expostas a agentes nocivos à saúde ou à integridade física.
+
+**Agentes Nocivos:**
+
+Os agentes nocivos são classificados em três categorias:
+
+1. **Agentes Físicos:** Ruído (acima de 85 dB), calor (acima de 28°C), frio intenso, radiações ionizantes (raios X, radioterapia), vibrações, pressão atmosférica anormal (mergulhadores).
+
+2. **Agentes Químicos:** Chumbo, mercúrio, benzeno, amianto, sílica, agrotóxicos, cádmio, arsênio.
+
+3. **Agentes Biológicos:** Vírus, bactérias, fungos, parasitas – comuns em profissionais de saúde, laboratórios, coleta de lixo hospitalar.
+
+**Tempo de Exposição:**
+
+O tempo de atividade especial necessário varia conforme o agente:
+- **15 anos:** Atividades de risco mais elevado (mineração subterrânea em frente de produção)
+- **20 anos:** Atividades com exposição ao amianto, radiação ionizante
+- **25 anos:** Atividades com exposição a ruído, agentes químicos, biológicos (regra geral)
+
+**Perfil Profissiográfico Previdenciário (PPP):**
+
+O PPP é o documento histórico-laboral do trabalhador, emitido pela empresa, que comprova as condições de exposição ambiental a agentes insalubres. Documento obrigatório a partir de 2004.
+
+O PPP deve conter:
+- Dados administrativos do trabalhador e da empresa
+- Registro de agentes nocivos (físicos, químicos, biológicos)
+- Técnica utilizada para aferição da exposição
+- Informações sobre uso de EPIs (Equipamentos de Proteção Individual) e sua eficácia
+- Laudo Técnico das Condições Ambientais de Trabalho (LTCAT) que fundamenta as informações
+
+**Requisitos Pós-Reforma (EC 103/2019):**
+- Idade mínima de 55 anos (15 anos de atividade especial)
+- Idade mínima de 58 anos (20 anos de atividade especial)
+- Idade mínima de 60 anos (25 anos de atividade especial)
+- Cálculo: 60% da média + 2% ao ano que exceder 15/20/25 anos de contribuição
+
+**Conversão de Tempo Especial:**
+
+O tempo de atividade especial pode ser convertido em tempo comum para fins de aposentadoria mediante aplicação de multiplicadores (1,4 para homens e 1,2 para mulheres).`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Qual o principal documento utilizado hoje para fins de comprovação da exposição a agentes nocivos junto ao INSS?',
+        options: [
+          'A Carteira de Trabalho (CTPS)',
+          'O Perfil Profissiográfico Previdenciário (PPP)',
+          'O holerite com o adicional de insalubridade',
+          'O contrato individual de trabalho'
+        ],
+        correctAnswer: 1,
+        explanation: 'O PPP é o documento histórico-laboral, emitido pela empresa, que comprova com base técnica as condições de exposição ambiental a agentes insalubres.'
+      },
+      {
+        question: 'Qual a idade mínima para aposentadoria especial com 25 anos de exposição a agentes nocivos (pós-reforma)?',
+        options: [
+          '55 anos',
+          '58 anos',
+          '60 anos',
+          '65 anos'
+        ],
+        correctAnswer: 2,
+        explanation: 'Após a EC 103/2019, o trabalhador com 25 anos de atividade especial precisa ter idade mínima de 60 anos para se aposentar, além do tempo de contribuição especial.'
+      }
+    ]
+  },
+  {
+    id: 8,
+    slug: 'beneficios-por-incapacidade',
+    title: 'Benefícios por Incapacidade',
+    description: 'Auxílio por incapacidade temporária (auxílio-doença), aposentadoria por incapacidade permanente e auxílio-acidente.',
+    duration: '4h',
+    sections: [
+      {
+        id: 1,
+        title: 'Diferenças nos Benefícios por Incapacidade',
+        content: `Os benefícios por incapacidade são concedidos pelo INSS quando o segurado fica impossibilitado de trabalhar, seja temporária ou permanentemente.
+
+**Auxílio por Incapacidade Temporária (Auxílio-Doença):**
+
+Concedido ao segurado que fica temporariamente incapaz para o trabalho por mais de 15 dias consecutivos.
+
+- **Carência:** 12 contribuições mensais (dispensada em casos de acidente de qualquer natureza, doenças graves listadas pela OMS).
+- **Perícia médica:** Obrigatória, realizada pelo INSS (médico perito federal).
+- **Duração:** Enquanto perdurar a incapacidade, com reavaliações periódicas.
+- **Valor:** 91% da média de todos os salários de contribuição, limitado ao teto do RGPS.
+- **Tutela antecipada:** Possibilidade de o Judiciário conceder o benefício antes do julgamento final, com base em prova pericial previamente produzida.
+
+**Aposentadoria por Incapacidade Permanente (Aposentadoria por Invalidez):**
+
+Concedida ao segurado que for considerado permanentemente incapaz para o trabalho, sem possibilidade de reabilitação profissional, conforme avaliação da perícia médica do INSS.
+
+- **Carência:** 12 contribuições mensais (dispensada em casos de acidente ou doenças graves).
+- **Valor:** 60% da média + 2% por ano que exceder 20 anos de contribuição (homens) ou 15 anos (mulheres).
+- **Acréscimo de 25%:** Se o aposentado por invalidez necessitar de assistência permanente de terceiros, tem direito a um acréscimo de 25% sobre o valor do benefício (Art. 45 da Lei 8.213/91).
+- **Revisão:** O aposentado por invalidez pode ser convocado para reavaliação pericial a cada 2 anos.
+
+**Auxílio-Acidente:**
+
+Concedido ao segurado que sofreu acidente de qualquer natureza e ficou com sequelas consolidadas que reduzem sua capacidade laboral, mas não o impedem de trabalhar.
+
+- **Carência:** Não exige carência.
+- **Valor:** 50% do salário de benefício.
+- **Natureza:** Indenizatória – o segurado continua trabalhando e recebendo o benefício cumulativamente com o salário.
+- **Acumulação:** Pode ser acumulado com outras aposentadorias (exceto aposentadoria por invalidez).
+- **Conversão em aposentadoria:** O auxílio-acidente não se converte automaticamente em aposentadoria.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'O Auxílio-Acidente tem caráter indenizatório. O segurado pode continuar trabalhando enquanto o recebe?',
+        options: [
+          'Não, ele deve ser compulsoriamente aposentado',
+          'Sim, ele pode continuar trabalhando normalmente, pois o benefício serve de indenização',
+          'Apenas se trabalhar em regime de meio período',
+          'Não, sob pena de devolução dos valores'
+        ],
+        correctAnswer: 1,
+        explanation: 'O auxílio-acidente é uma indenização mensal de 50% do salário de benefício devido a sequelas consolidadas que reduzam a capacidade laboral, não impedindo a continuidade do trabalho remunerado.'
+      },
+      {
+        question: 'Qual o percentual máximo de acréscimo previsto em lei para aposentados por invalidez que necessitam de assistência permanente de terceiros?',
+        options: [
+          '15%',
+          '20%',
+          '25%',
+          '30%'
+        ],
+        correctAnswer: 2,
+        explanation: 'O Art. 45 da Lei 8.213/91 prevê um acréscimo de 25% sobre o valor do benefício do aposentado por invalidez que necessitar de assistência permanente de terceiros.'
+      }
+    ]
+  },
+  {
+    id: 9,
+    slug: 'pensao-por-morte-e-auxilio-reclusao',
+    title: 'Pensão por Morte e Auxílio-Reclusão',
+    description: 'Requisitos, duração do benefício, cotas de cálculo e classes de dependentes.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'Cálculo da Pensão e Classes de Dependentes',
+        content: `A pensão por morte e o auxílio-reclusão são benefícios destinados aos dependentes do segurado falecido ou preso.
+
+**Pensão por Morte:**
+
+Concedida aos dependentes do segurado falecido, independentemente de carência (não exige número mínimo de contribuições).
+
+**Requisitos para concessão:**
+- Óbito do segurado (obrigatório ou facultativo)
+- Qualidade de segurado do falecido na data do óbito (ou dentro do período de graça)
+- Qualidade de dependente do requerente
+
+**Cálculo do Valor (pós EC 103/2019):**
+
+O valor da pensão por morte é calculado em sistema de cotas:
+- **Cota base:** 50% do valor da aposentadoria que o segurado recebia ou a que teria direito
+- **Cota adicional por dependente:** 10% para cada dependente, limitado a 100%
+
+**Exemplo prático:**
+- Viúva + 2 filhos menores = 50% + 10% + 10% = 70% do benefício original
+- Viúva + 3 filhos menores = 50% + 10% + 10% + 10% = 80%
+- Viúva + 5 filhos = 50% + 10% + 10% + 10% + 10% + 10% = 100%
+
+**Extinção das cotas individuais:**
+
+Quando um dependente perde a qualidade (ex.: filho completa 21 anos), a cota de 10% é extinta, reduzindo o valor total da pensão.
+
+**Duração do benefício para cônjuge/companheiro(a):**
+
+- **Válido por 4 meses** se o casamento/união estável tiver menos de 2 anos ou se o segurado tiver menos de 18 contribuições.
+- **Gradual conforme a idade** se o casamento tiver mais de 2 anos:
+  - Até 21 anos: 3 anos
+  - De 22 a 26 anos: 6 anos
+  - De 27 a 29 anos: 10 anos
+  - De 30 a 40 anos: 15 anos
+  - De 41 a 43 anos: 20 anos
+  - Acima de 44 anos: vitalício
+
+**Auxílio-Reclusão:**
+
+Concedido aos dependentes do segurado de baixa renda que for preso em regime fechado.
+
+**Requisitos:**
+- Segurado de baixa renda (último salário de contribuição igual ou inferior a R$ 1.819,26 em 2024)
+- Qualidade de segurado na data da prisão
+- Efetivo recolhimento à prisão (regime fechado)
+- Não estar recebendo salário ou benefício previdenciário
+- Carência de 24 contribuições mensais
+
+O valor do auxílio-reclusão segue a mesma regra de cotas da pensão por morte. O benefício é dividido igualmente entre os dependentes e é suspenso durante eventuais fugas ou livramento condicional.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Quais dependentes possuem dependência econômica presumida (não necessitando de prova documental)?',
+        options: [
+          'Irmãos menores de 21 anos',
+          'Pais do segurado falecido',
+          'O cônjuge/companheiro e os filhos menores de 21 anos não emancipados',
+          'Tios e primos que viviam sob o mesmo teto'
+        ],
+        correctAnswer: 2,
+        explanation: 'Os dependentes de Classe I (cônjuge, companheiro e filhos menores ou inválidos) gozam de dependência presumida em lei, dispensando comprovação documental de necessidade financeira.'
+      },
+      {
+        question: 'Qual o tempo de duração da pensão por morte para o cônjuge com idade entre 30 e 40 anos quando o casamento tinha mais de 2 anos?',
+        options: [
+          '10 anos',
+          '15 anos',
+          '20 anos',
+          'Vitalício'
+        ],
+        correctAnswer: 1,
+        explanation: 'Para o cônjuge com idade entre 30 e 40 anos e casamento com mais de 2 anos, o benefício da pensão por morte tem duração de 15 anos.'
+      }
+    ]
+  },
+  {
+    id: 10,
+    slug: 'beneficio-de-prestacao-continuada-bpc-loas',
+    title: 'Benefício de Prestação Continuada (BPC/LOAS)',
+    description: 'O benefício assistencial ao idoso e à pessoa com deficiência, critérios de miserabilidade e judicialização.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'O critério de renda per capita do BPC',
+        content: `O Benefício de Prestação Continuada (BPC), também conhecido como LOAS (Lei Orgânica da Assistência Social), é um benefício assistencial previsto na Lei nº 8.742/93, garantindo um salário mínimo mensal ao idoso e à pessoa com deficiência de baixa renda.
+
+**Características fundamentais do BPC:**
+- **Não contributivo:** Não exige contribuições prévias ao INSS
+- **Natureza assistencial:** Vinculado à Assistência Social, não à Previdência
+- **Valor fixo:** Um salário mínimo mensal
+- **Não gera 13º salário:** Por não ser benefício previdenciário
+- **Não deixa pensão por morte:** O benefício é personalíssimo e extingue-se com a morte do titular
+
+**Requisitos para concessão:**
+
+**I - Para o idoso:**
+- Idade mínima de 65 anos
+- Renda familiar mensal per capita inferior a 1/4 do salário mínimo
+- Não receber outro benefício no âmbito da Seguridade Social (exceto assistência médica)
+
+**II - Para a pessoa com deficiência:**
+- Comprovação de deficiência (impedimento de longo prazo de natureza física, mental, intelectual ou sensorial)
+- Avaliação biopsicossocial realizada pelo INSS
+- Renda familiar mensal per capita inferior a 1/4 do salário mínimo
+- Não receber outro benefício no âmbito da Seguridade Social
+
+**Conceito de família para o BPC:**
+
+O conceito de família para o BPC é restrito ao requerente, cônjuge/companheiro, pais, irmãos solteiros, filhos e enteados solteiros que vivam sob o mesmo teto.
+
+**Flexibilização do critério de renda:**
+
+O STF (STF, RE 580.963/PR - Tema 27) reconheceu que o critério de 1/4 do salário mínimo não é absoluto e pode ser relativizado quando houver circunstâncias excepcionais que demonstrem a condição de miserabilidade do idoso ou da pessoa com deficiência.
+
+**Revisão do BPC:**
+- A cada 2 anos para a pessoa com deficiência (reavaliação da deficiência)
+- A qualquer tempo, se houver indícios de irregularidades ou melhora da situação financeira
+
+**Processo de requerimento:**
+1. Agendamento no INSS (Central 135 ou site Meu INSS)
+2. Avaliação social (para pessoa com deficiência)
+3. Avaliação médica (para pessoa com deficiência)
+4. Análise documental de renda
+5. Decisão administrativa
+
+**Judicialização:**
+
+Cerca de 40% das concessões de BPC ocorrem por via judicial, principalmente quando:
+- O critério de renda de 1/4 do SM é aplicado de forma rígida
+- Há divergência nas avaliações médica/social
+- O INSS nega o benefício sem considerar as particularidades do caso`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Qual o valor pago mensalmente ao beneficiário do BPC/LOAS?',
+        options: [
+          'Meio salário mínimo',
+          'Um salário mínimo vigente',
+          'Dois salários mínimos',
+          'Depende das contribuições anteriores do idoso'
+        ],
+        correctAnswer: 1,
+        explanation: 'O BPC garante o pagamento fixo mensal de exatamente 1 (um) salário mínimo ao idoso com 65 anos ou mais, ou à pessoa com deficiência em situação de vulnerabilidade.'
+      },
+      {
+        question: 'O BPC/LOAS gera direito a 13º salário e pensão por morte?',
+        options: [
+          'Sim, para ambos',
+          'Gera 13º, mas não pensão por morte',
+          'Não gera 13º nem pensão por morte',
+          'Gera pensão por morte, mas não 13º'
+        ],
+        correctAnswer: 2,
+        explanation: 'Por ser benefício assistencial (não previdenciário), o BPC/LOAS não gera direito a 13º salário nem deixa pensão por morte aos dependentes.'
+      }
+    ]
+  },
+  {
+    id: 11,
+    slug: 'processo-administrativo-previdenciario-pap',
+    title: 'Processo Administrativo Previdenciário (PAP)',
+    description: 'Fases do PAP junto ao INSS, instrução de provas, dever de fundamentar e recursos ordinários.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'Iniciando o Requerimento e as Fases de Recurso',
+        content: `O Processo Administrativo Previdenciário (PAP) é o procedimento pelo qual o cidadão requer ao INSS o reconhecimento de seus direitos previdenciários. O PAP é regido pela Lei nº 9.784/99 (processo administrativo federal) e pelas normas específicas da Previdência Social.
+
+**Fases do PAP:**
+
+**1. Fase de Requerimento (Inicial):**
+- Realizado pelo site Meu INSS (gov.br/meuinss) ou pela Central 135
+- O requerente apresenta seus dados, documentos e o benefício pretendido
+- Prazo para conclusão: 30 a 90 dias (dependendo da complexidade)
+- O INSS pode solicitar documentos complementares (cumprimento de exigência)
+- Prazo para cumprimento de exigência: 30 dias (prorrogável)
+
+**2. Fase de Instrução:**
+- Análise documental e verificação de dados no sistema CNIS
+- Solicitação de informações ao empregador
+- Realização de perícia médica (benefícios por incapacidade)
+- Avaliação social (BPC/LOAS)
+- O INSS tem o dever de instruir o processo, podendo solicitar documentos necessários
+- Aplica-se o princípio do formalismo moderado: o processo não deve ser prejudicado por questões meramente formais
+
+**3. Fase Decisória:**
+- Decisão fundamentada com base na análise documental e legal
+- O INSS deve fundamentar sua decisão, indicando os motivos de fato e de direito
+- Possibilidade de decisão favorável (concessão), desfavorável (indeferimento) ou parcial
+- Prazo para decisão: 30 dias prorrogáveis
+
+**4. Fase Recursal:**
+- Recurso contra decisão desfavorável do INSS
+- Prazo para interposição: 30 dias
+- Efeito suspensivo: Sim (suspende os efeitos da decisão recorrida)
+- Julgado pelo Conselho de Recursos da Previdência Social (CRPS)
+
+**Estrutura do CRPS:**
+
+1ª instância recursal: **Junta de Recursos**
+- 3 membros: representante do governo, dos empregadores e dos trabalhadores
+- Julga recursos ordinários
+
+2ª instância recursal: **Câmara de Julgamento**
+- 5 membros
+- Julga recursos contra decisões da Junta
+
+3ª instância recursal: **Conselho Pleno**
+- Julga recursos especiais (divergência entre Câmaras) e revisões de decisões
+
+**Recurso Especial para o Conselho Pleno:**
+- Prazo: 30 dias
+- Cabível quando há divergência entre Câmaras de Julgamento
+- Não tem efeito suspensivo automático
+
+**Revisão Administrativa:**
+
+Possibilidade de revisão do ato de concessão (se descoberta irregularidade) ou pedido de revisão formulado pelo segurado (até 10 anos após a concessão).
+
+**Esgotamento da via administrativa:**
+
+O esgotamento da via administrativa não é exigido para acesso ao Judiciário (Súmula Vinculante nº 5 do STF: "A falta de defesa técnica por advogado no processo administrativo disciplinar não ofende a Constituição"). O segurado pode optar por ingressar diretamente na Justiça sem recorrer ao CRPS.`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Onde se interpõe o recurso em face da decisão que nega um benefício previdenciário no âmbito administrativo?',
+        options: [
+          'Diretamente na Justiça Federal',
+          'Perante o Conselho de Recursos da Previdência Social (CRPS)',
+          'No Ministério do Trabalho',
+          'Na Defensoria Pública da União'
+        ],
+        correctAnswer: 1,
+        explanation: 'Na via administrativa, o inconformismo contra a negativa do INSS é julgado de forma colegiada pela Junta de Recursos/Câmaras de Julgamento do CRPS.'
+      },
+      {
+        question: 'Qual o prazo para interposição do recurso ordinário contra decisão do INSS no processo administrativo previdenciário?',
+        options: [
+          '10 dias',
+          '15 dias',
+          '30 dias',
+          '60 dias'
+        ],
+        correctAnswer: 2,
+        explanation: 'O prazo para interposição de recurso ordinário contra decisão desfavorável do INSS é de 30 dias, contados da ciência da decisão.'
+      }
+    ]
+  },
+  {
+    id: 12,
+    slug: 'revisoes-de-beneficios-e-pratica-advocaticia',
+    title: 'Revisões de Benefícios e Prática Advocatícia',
+    description: 'Principais teses de revisão (Revisão da Vida Toda, etc.), prazos decadenciais e simulações.',
+    duration: '3h',
+    sections: [
+      {
+        id: 1,
+        title: 'Prazo Decadencial de 10 Anos e Principais Teses de Revisão',
+        content: `A revisão de benefícios previdenciários é uma das áreas mais dinâmicas do Direito Previdenciário, com constantes mudanças jurisprudenciais e legislativas.
+
+**Prazo Decadencial (Art. 103 da Lei 8.213/91):**
+
+O direito do segurado de pleitear a revisão do ato de concessão do benefício decai em 10 anos, contados:
+- Do dia primeiro do mês seguinte ao do recebimento da primeira prestação
+- Ou da data em que tomou conhecimento do ato indevido
+
+**Importante:** A decadência não se aplica a:
+- Revistas de ofício pelo INSS (quando o INSS descobre erro)
+- Correção de erro material (cálculo aritmético equivocado)
+- Benefícios concedidos antes da Lei 9.528/97 (que introduziu a decadência)
+
+**Principais Teses de Revisão:**
+
+**1. Revisão da Vida Toda (Tema 999/STF):**
+- Permite que o segurado opte pela regra de cálculo mais vantajosa quando a média de todas as contribuições (anteriores e posteriores a julho/1994) for maior que a média dos 80% maiores salários
+- O STF reconheceu o direito em 2021 (RE 1.276.977)
+- Impacto: Aposentados que tiveram contribuições altas antes de 1994 podem se beneficiar
+
+**2. Revisão do Buraco Negro (Tema 1.100/STF):**
+- Questiona a exclusão dos meses de competência sem contribuição no cálculo do fator previdenciário
+- O STF decidiu que os meses sem contribuição não podem ser desconsiderados como "buraco negro" no cálculo
+
+**3. Revisão do Fator Previdenciário (Tema 1.091/STF):**
+- Possibilidade de revisão do benefício pela regra 85/95 (progressiva) para quem tinha direito adquirido antes da Lei 13.183/2015
+
+**4. Revisão do artigo 29, II da Lei 8.213/91:**
+- Para benefícios concedidos entre 1991 e 2009, o cálculo considerava apenas 80% dos maiores salários (descartando 20% menores)
+- Tese de revisão para incluir todos os salários quando isso for mais benéfico
+
+**5. Revisão da Desaposentação:**
+- Possibilidade de renunciar à aposentadoria para obter novo benefício com melhor valor
+- Atualmente vedada pelo STF (Tema 503), mas ainda discutida em casos específicos
+
+**Simulações e Planejamento Previdenciário:**
+
+O advogado previdenciarista deve dominar ferramentas de simulação para orientar o cliente sobre:
+- **Melhor momento de se aposentar:** Comparação de regras definitivas e de transição
+- **Tese de revisão aplicável:** Qual delas trará maior benefício ao cliente
+- **Recolhimento complementar:** Orientação para segurados facultativos sobre a alíquota mais vantajosa
+- **Planejamento sucessório:** Como a previdência afeta o planejamento patrimonial
+
+**Boas Práticas na Advocacia Previdenciária:**
+1. Análise completa do CNIS do cliente
+2. Simulação em múltiplos cenários (regras de transição x regra definitiva)
+3. Documentação detalhada do processo administrativo
+4. Acompanhamento da tramitação no CRPS
+5. Cálculo atualizado do benefício para ajuizamento de ação
+6. Verificação de possíveis teses de revisão antes da concessão`
+      }
+    ],
+    quiz: [
+      {
+        question: 'Qual o prazo geral de decadência para pleitear a revisão de ato de concessão de benefício previdenciário?',
+        options: [
+          '5 anos',
+          '10 anos',
+          '20 anos',
+          'Não há prazo de decadência, é perpétuo'
+        ],
+        correctAnswer: 1,
+        explanation: 'O direito do segurado de pleitear a revisão do ato de concessão decai em 10 (dez) anos, contados do dia primeiro do mês seguinte ao do recebimento da primeira prestação.'
+      },
+      {
+        question: 'A Revisão da Vida Toda (Tema 999/STF) permite que o segurado opte pela regra de cálculo mais vantajosa considerando...',
+        options: [
+          'Apenas as contribuições após a reforma da previdência',
+          'Todas as contribuições (inclusive anteriores a julho/1994) quando mais benéfico',
+          'Apenas contribuições rurais',
+          'O descarte dos 20% menores salários'
+        ],
+        correctAnswer: 1,
+        explanation: 'A Revisão da Vida Toda permite que o segurado opte pelo cálculo que considere todas as contribuições feitas desde o início, incluindo o período anterior a julho/1994, quando isso resultar em benefício maior.'
+      }
+    ]
+  }
+];
+
+// Module Progress delegates to progress service
+export interface ModuleProgress {
+  [moduleId: number]: {
+    status: 'liberado' | 'bloqueado' | 'concluido';
+    grade?: number;
+  };
+}
+
+import {
+  getModuleProgress as getProgressAsync,
+  getModuleStatus as getStatusAsync,
+  getModuleGrade as getGradeAsync,
+  unlockModule as unlockModuleAsync,
+  completeModule as completeModuleAsync,
+  getModuleProgressSync,
+  getModuleStatusSync,
+} from '../lib/progress';
+
+// Re-export async versions that use Supabase when userId is provided
+export { getProgressAsync, getStatusAsync, getGradeAsync, unlockModuleAsync, completeModuleAsync };
+
+// Sync versions (localStorage fallback) for immediate UI rendering
+export function getModuleProgress(): ModuleProgress {
+  return getModuleProgressSync();
+}
+
+export function saveModuleProgress(progress: ModuleProgress): void {
+  localStorage.setItem('oryon_modules_progress', JSON.stringify(progress));
+}
+
+export function getModuleStatus(moduleId: number): 'liberado' | 'bloqueado' | 'concluido' {
+  return getModuleStatusSync(moduleId);
+}
+
+export function getModuleGrade(moduleId: number): number | undefined {
+  const progress = getModuleProgressSync();
+  return progress[moduleId]?.grade;
+}
+
+export function unlockModule(moduleId: number): void {
+  const progress = getModuleProgressSync();
+  progress[moduleId] = { status: 'liberado' };
+  saveModuleProgress(progress);
+}
+
+export function completeModule(moduleId: number, grade: number): void {
+  const progress = getModuleProgressSync();
+  progress[moduleId] = { status: 'concluido', grade };
+  if (moduleId < courseModules.length) {
+    progress[moduleId + 1] = { status: 'liberado' };
+  }
+  saveModuleProgress(progress);
+}
+
+// Keep legacy exports for backward compatibility
+export const modules = moduleSummaries;
+
+export const certificateExample = {
+  studentName: 'Maria Oliveira Santos',
+  courseName: 'Direito Previdenciário na Prática: Benefícios, Segurados e Processo Administrativo',
+  workload: '40 horas',
+  code: 'ORY-2026-0001',
+  completionDate: '15 de março de 2026',
+  status: 'válido' as const,
+};
+
+export const faqItems = [
+  {
+    question: 'O curso é reconhecido pelo MEC?',
+    answer: 'Trata-se de curso livre de formação complementar, conforme modalidade de educação não formal. A aceitação para horas complementares depende das regras da instituição de ensino do aluno.',
+  },
+  {
+    question: 'Qual a carga horária?',
+    answer: 'O curso possui carga horária total de 40 horas, distribuídas em 12 módulos com aulas teóricas, quizzes e avaliação final.',
+  },
+  {
+    question: 'Como recebo o certificado?',
+    answer: 'Após concluir todos os módulos, quizzes e a avaliação final com nota mínima de 70%, você poderá baixar o certificado digital diretamente na plataforma.',
+  },
+  {
+    question: 'O certificado tem validação?',
+    answer: 'Sim! Todo certificado emitido possui um código único e um QR Code que permitem a validação online por qualquer instituição ou empregador.',
+  },
+  {
+    question: 'Preciso pagar?',
+    answer: 'O curso possui valor institucional de R$ 197,00, mas está com bolsa acadêmica de 100% aplicada, liberando o acesso gratuito para fins de formação complementar.',
+  },
+];
+
+export interface RecentModule {
+  id: number;
+  title: string;
+  status: 'concluido' | 'liberado';
+  grade: number | null;
+}
+
+export interface DashboardData {
+  studentName: string;
+  email: string;
+  progress: number;
+  completedModules: number;
+  totalModules: number;
+  averageGrade: number;
+  lastAccess: string;
+  recentModules: RecentModule[];
+}
+
+export const dashboardData: DashboardData = {
+  studentName: 'Maria Oliveira',
+  email: 'maria.oliveira@email.com',
+  progress: 25,
+  completedModules: 3,
+  totalModules: 12,
+  averageGrade: 82,
+  lastAccess: '20/05/2026',
+  recentModules: [
+    { id: 1, title: 'Introdução ao Direito Previdenciário', status: 'concluido', grade: 85 },
+    { id: 2, title: 'Regime Geral de Previdência Social', status: 'concluido', grade: 78 },
+    { id: 3, title: 'Qualidade de Segurado e Carência', status: 'concluido', grade: 82 },
+    { id: 4, title: 'Segurados e Dependentes', status: 'liberado', grade: null },
+  ],
+};
