@@ -84,6 +84,8 @@ export default function Hero() {
       style={{
         position: 'relative',
         minHeight: '100vh',
+        width: '100%',
+        maxWidth: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -105,6 +107,7 @@ export default function Hero() {
           objectFit: 'cover',
           objectPosition: 'center',
           zIndex: 0,
+          pointerEvents: 'none',
         }}
       />
 
@@ -306,6 +309,18 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 768px) {
+          #hero {
+            width: 100% !important;
+            max-width: 100% !important;
+            touch-action: pan-y !important;
+            overscroll-behavior: none !important;
+          }
+          .section-container {
+            padding: 0 16px !important;
+          }
+          #hero img[aria-hidden] {
+            object-position: left center !important;
+          }
           [ref="statsRef"] {
             gap: 24px !important;
           }
