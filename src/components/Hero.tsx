@@ -90,7 +90,7 @@ export default function Hero() {
         flexDirection: 'column',
         alignItems: 'center',
         paddingTop: 72,
-        overflow: 'hidden',
+        overflowX: 'hidden',
         background: 'var(--navy-950)',
       }}
     >
@@ -312,8 +312,7 @@ export default function Hero() {
           #hero {
             width: 100% !important;
             max-width: 100% !important;
-            touch-action: pan-y !important;
-            overscroll-behavior: none !important;
+
           }
           .section-container {
             padding: 0 16px !important;
