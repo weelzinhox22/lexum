@@ -161,7 +161,7 @@ export default function Hero() {
         zIndex: 1,
       }} />
 
-      <div className="section-container" style={{ position: 'relative', zIndex: 10, width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div className="section-container" style={{ position: 'relative', zIndex: 10, width: '100%', flex: 1, display: 'flex', flexDirection: 'column', paddingLeft: 'clamp(20px, 3vw, 48px)' }}>
         <div style={{
           maxWidth: 720,
           padding: 'clamp(60px, 10vh, 120px) 0 clamp(40px, 6vh, 80px)',
