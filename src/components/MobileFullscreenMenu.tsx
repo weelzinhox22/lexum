@@ -76,17 +76,17 @@ export default function MobileFullscreenMenu({
 
         const tl = gsap.timeline();
 
-        tl.to(el, { opacity: 1, duration: 0.35, ease: 'power2.out' })
-          .fromTo(headerRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.2')
-          .fromTo(footerRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, '-=0.3');
+        tl.to(el, { opacity: 1, duration: 0.15, ease: 'power2.out' })
+          .fromTo(headerRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out' }, '-=0.1')
+          .fromTo(footerRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power3.out' }, '-=0.15');
 
         // Stagger links after overlay is visible
         if (linksRef.current) {
           tl.fromTo(
             linksRef.current.children,
-            { opacity: 0, y: 40, filter: 'blur(8px)' },
-            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55, stagger: 0.06, ease: 'power3.out' },
-            '-=0.1'
+            { opacity: 0, y: 30, filter: 'blur(6px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.3, stagger: 0.04, ease: 'power3.out' },
+            '-=0.05'
           );
         }
 

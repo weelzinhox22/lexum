@@ -76,7 +76,7 @@ export default function Login() {
         navigate('/dashboard');
       } else {
         // Sign up
-        const { error: signUpError } = await supabase.auth.signUp({
+        const { error: signUpError, data: signUpData } = await supabase.auth.signUp({
           email: emailVal,
           password: passVal,
           options: {
@@ -88,6 +88,21 @@ export default function Login() {
           },
         });
         if (signUpError) throw signUpError;
+
+        // Salvar dados na tabela user_profiles (falha silenciosa se a migration nao rodou)
+        const userId = signUpData?.user?.id;
+        if (userId) {
+          try {
+            await supabase.from('user_profiles').insert({
+              user_id: userId,
+              full_name: nameVal,
+              university: universityVal,
+              semester: semesterVal,
+            });
+          } catch (profileErr) {
+            console.error('Erro ao salvar perfil:', profileErr);
+          }
+        }
         
         setSuccess('Conta criada com sucesso! Redirecionando...');
         setTimeout(() => {
@@ -225,7 +240,7 @@ export default function Login() {
                     <input
                       type="text"
                       className="input-glass"
-                      placeholder="Ex.: Universidade Federal do Rio de Janeiro"
+                      placeholder="Ex.: Universidade Federal da Bahia, Salvador"
                       value={universityVal}
                       onChange={(e) => setUniversityVal(e.target.value)}
                       required

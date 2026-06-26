@@ -3262,34 +3262,6 @@ html:has(.app-sidebar--collapsed) {
   }
 }
 
-/* Certificate page mobile */
-@media (max-width: 768px) {
-  .cert-hero-title {
-    font-size: 28px !important;
-  }
-
-  .cert-form-card {
-    padding: 24px 20px !important;
-  }
-
-  .cert-form-layout {
-    grid-template-columns: 1fr !important;
-  }
-
-  .cert-details-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .cert-trust-row {
-    flex-wrap: wrap;
-    gap: 8px !important;
-  }
-
-  .cert-trust-divider {
-    display: none;
-  }
-}
-
 /* Validation page mobile */
 @media (max-width: 768px) {
   .val-hero-title {
@@ -3444,7 +3416,6 @@ html:has(.app-sidebar--collapsed) {
 /* ── Wrapper da página ── */
 div.cert-page {
   padding: 0 0 64px !important;
-  animation: fadeUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
 }
 
 /* ── Layout desbloqueado: side-by-side ── */
