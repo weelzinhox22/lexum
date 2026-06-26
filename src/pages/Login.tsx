@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle, User, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle, User, Building2, Hash, AlertCircle, Loader2 } from 'lucide-react';
 import { gsap } from 'gsap';
 import { supabase } from '../lib/supabase';
 
@@ -15,6 +15,8 @@ export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [nameVal, setNameVal] = useState('');
+  const [universityVal, setUniversityVal] = useState('');
+  const [semesterVal, setSemesterVal] = useState('');
   const [emailVal, setEmailVal] = useState('');
   const [passVal, setPassVal] = useState('');
   const [loading, setLoading] = useState(false);
@@ -78,7 +80,11 @@ export default function Login() {
           email: emailVal,
           password: passVal,
           options: {
-            data: { full_name: nameVal },
+            data: {
+              full_name: nameVal,
+              university: universityVal,
+              semester: semesterVal,
+            },
           },
         });
         if (signUpError) throw signUpError;
@@ -205,6 +211,41 @@ export default function Login() {
                       value={nameVal}
                       onChange={(e) => setNameVal(e.target.value)}
                       required
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* University (register only) */}
+              {!isLogin && (
+                <div>
+                  <label className="form-label">Faculdade / Universidade</label>
+                  <div className="input-glass-wrapper">
+                    <Building2 size={15} className="input-glass-icon" />
+                    <input
+                      type="text"
+                      className="input-glass"
+                      placeholder="Ex.: Universidade Federal do Rio de Janeiro"
+                      value={universityVal}
+                      onChange={(e) => setUniversityVal(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Semester (register only) */}
+              {!isLogin && (
+                <div>
+                  <label className="form-label">Semestre (opcional)</label>
+                  <div className="input-glass-wrapper">
+                    <Hash size={15} className="input-glass-icon" />
+                    <input
+                      type="text"
+                      className="input-glass"
+                      placeholder="Ex.: 5º semestre"
+                      value={semesterVal}
+                      onChange={(e) => setSemesterVal(e.target.value)}
                     />
                   </div>
                 </div>
