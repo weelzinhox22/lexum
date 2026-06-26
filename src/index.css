@@ -3173,6 +3173,9 @@ html:has(.app-sidebar--collapsed) {
 @media (max-width: 768px) {
   .app-mobile-header {
     display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
   }
 
   .mobile-fullscreen-menu {
@@ -3181,10 +3184,12 @@ html:has(.app-sidebar--collapsed) {
 
   .app-shell-main {
     margin-left: 0 !important;
+    padding-top: 56px;
   }
 
   .app-main {
     margin-left: 0 !important;
+    padding-top: 56px;
   }
 
   .app-shell {
@@ -3203,7 +3208,7 @@ html:has(.app-sidebar--collapsed) {
 
   /* Make app-main fill the remaining viewport height (minus mobile header) */
   .app-main {
-    min-height: calc(100dvh - 56px);
+    min-height: 100dvh;
     flex: 1;
     display: flex;
     flex-direction: column;
