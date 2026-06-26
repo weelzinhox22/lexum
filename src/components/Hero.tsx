@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, Award, FileCheck, ChevronRight, Shield, QrCode, Sparkles } from 'lucide-react';
+import { Clock, Award, FileCheck, ChevronRight, Sparkles } from 'lucide-react';
 import { gsap } from 'gsap';
 
 export default function Hero() {
@@ -10,13 +10,9 @@ export default function Hero() {
   const subRef = useRef<HTMLParagraphElement>(null);
   const highlightsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
-
-  // Spotlight ref and floating animation reference
-  const floatAnimRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     // GSAP Intro Timeline
@@ -51,33 +47,11 @@ export default function Hero() {
       { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 },
       '-=0.4'
     )
-    .fromTo(cardRef.current,
-      { opacity: 0, x: 60, rotateY: -12, filter: 'blur(8px)' },
-      { opacity: 1, x: 0, rotateY: 0, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out' },
-      '-=1.0'
-    )
     .fromTo(scrollRef.current,
       { opacity: 0 },
       { opacity: 1, duration: 0.8 },
       '-=0.3'
     );
-  }, []);
-
-  // Soft continuous float animation for the certificate card
-  useEffect(() => {
-    if (!cardRef.current) return;
-    floatAnimRef.current = gsap.to(cardRef.current, {
-      y: -12,
-      duration: 3.5,
-      ease: 'sine.inOut',
-      repeat: -1,
-      yoyo: true,
-      delay: 1.5,
-    });
-
-    return () => {
-      floatAnimRef.current?.kill();
-    };
   }, []);
 
   // Global mousemove handler for background spotlight
@@ -103,57 +77,6 @@ export default function Hero() {
     };
   }, []);
 
-  // 3D Tilt handler for the Certificate Card
-  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    // Pause floating animation while user is interacting
-    if (floatAnimRef.current && floatAnimRef.current.isActive()) {
-      floatAnimRef.current.pause();
-    }
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const xc = rect.width / 2;
-    const yc = rect.height / 2;
-    
-    // Degrees of rotation (max 15 deg)
-    const angleX = -(y - yc) / 10;
-    const angleY = (x - xc) / 10;
-    
-    gsap.to(card, {
-      rotateX: angleX,
-      rotateY: angleY,
-      scale: 1.04,
-      duration: 0.3,
-      ease: 'power2.out',
-      transformPerspective: 1000,
-    });
-  };
-
-  const handleCardMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    // Resume floating smoothly
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      scale: 1,
-      y: -6, // Middle point of the float animation
-      duration: 0.5,
-      ease: 'power2.out',
-      onComplete: () => {
-        if (floatAnimRef.current) {
-          floatAnimRef.current.resume();
-        }
-      }
-    });
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -169,11 +92,36 @@ export default function Hero() {
         background: 'var(--navy-950)',
       }}
     >
+      {/* Hero Background Image — fullscreen */}
+      <img
+        src="/hero.webp"
+        alt=""
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          zIndex: 0,
+        }}
+      />
+
+      {/* Dark overlay for readability */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(180deg, rgba(4,16,30,0.55) 0%, rgba(4,16,30,0.40) 50%, rgba(4,16,30,0.70) 100%)',
+        zIndex: 1,
+      }} />
+
       {/* Background layers */}
       <div style={{
         position: 'absolute',
         inset: 0,
         background: 'linear-gradient(145deg, #030C16 0%, #061525 40%, #091F38 70%, #051220 100%)',
+        zIndex: -1,
       }} />
 
       {/* Mouse Follower Spotlight (Spotlight effect) */}
@@ -215,10 +163,8 @@ export default function Hero() {
 
       <div className="section-container" style={{ position: 'relative', zIndex: 10, width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: 60,
-          alignItems: 'center',
+          maxWidth: 720,
+          margin: '0 auto',
           padding: 'clamp(60px, 10vh, 120px) 0 clamp(40px, 6vh, 80px)',
           flex: 1,
         }}>
@@ -349,95 +295,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right — Interactive Certificate Card */}
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div
-            ref={cardRef}
-            className="hero-right-card"
-            style={{
-              opacity: 0,
-              width: '100%',
-              maxWidth: 380,
-              position: 'relative',
-              transformStyle: 'preserve-3d',
-              cursor: 'pointer',
-            }}
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
-            >
-              {/* Glow Behind Card */}
-              <div style={{
-                position: 'absolute',
-                inset: -30,
-                background: 'radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)',
-                borderRadius: '50%',
-                pointerEvents: 'none',
-                filter: 'blur(30px)',
-                transform: 'translateZ(-10px)',
-              }} />
-
-              {/* Card Container */}
-              <div className="hero-certificate-card" style={{ transformStyle: 'preserve-3d' }}>
-                <div className="hero-certificate-shine" />
-
-                {/* Top bar */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, transform: 'translateZ(20px)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <Shield size={14} style={{ color: 'var(--gold-600)' }} />
-                    <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--gold-600)' }}>
-                      Certificado Complementar
-                    </span>
-                  </div>
-                  <span className="valid-badge">
-                    <span className="valid-badge-dot" />
-                    Verificado
-                  </span>
-                </div>
-
-                {/* Main Content */}
-                <div style={{ textAlign: 'center', marginBottom: 28, transform: 'translateZ(30px)' }}>
-                  <div className="card-award-icon-wrapper">
-                    <Award size={32} style={{ color: 'var(--gold-500)' }} />
-                  </div>
-                  <p style={{ fontFamily: 'var(--font-editorial)', fontSize: 18, fontWeight: 600, color: 'var(--navy-900)', marginBottom: 6 }}>
-                    Lexum
-                  </p>
-                  <p style={{ fontSize: 12, color: '#637080', lineHeight: 1.55, maxWidth: 240, margin: '0 auto' }}>
-                    Certifica a conclusão com aproveitamento da formação complementar em Direito Previdenciário.
-                  </p>
-                </div>
-
-                {/* Code Box */}
-                <div style={{
-                  background: 'rgba(7,21,37,0.04)',
-                  border: '1px solid rgba(201,168,76,0.15)',
-                  borderRadius: 12,
-                  padding: '14px 16px',
-                  marginBottom: 20,
-                  transform: 'translateZ(25px)',
-                  transition: 'border-color 0.3s',
-                }} className="card-code-box">
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 4 }}>
-                    <QrCode size={14} style={{ color: 'var(--navy-700)' }} />
-                    <span style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, color: 'var(--navy-800)', letterSpacing: '0.12em' }}>
-                      ORY-2026-0001
-                    </span>
-                  </div>
-                  <p style={{ fontSize: 10, color: '#9BAAB9', textAlign: 'center', letterSpacing: '0.05em' }}>
-                    Código oficial de autenticidade
-                  </p>
-                </div>
-
-                {/* Footer metadata */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transform: 'translateZ(15px)' }}>
-                  <Clock size={11} style={{ color: '#9BAAB9' }} />
-                  <span style={{ fontSize: 11, color: '#9BAAB9', fontWeight: 500 }}>Carga Horária de 40 Horas</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Scroll indicator */}
         <div ref={scrollRef} style={{ opacity: 0, display: 'flex', justifyContent: 'center', paddingBottom: 40 }}>
           <div className="scroll-indicator">
@@ -449,38 +306,11 @@ export default function Hero() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-right-card {
-            max-width: 320px !important;
-          }
-          .hero-certificate-card {
-            padding: 24px 20px !important;
-          }
-          .hero-certificate-card .card-award-icon-wrapper {
-            width: 56px !important;
-            height: 56px !important;
-          }
-          .hero-certificate-card .card-award-icon-wrapper svg {
-            width: 24px !important;
-            height: 24px !important;
-          }
           [ref="statsRef"] {
             gap: 24px !important;
           }
         }
         @media (max-width: 480px) {
-          .hero-right-card {
-            max-width: 100% !important;
-          }
-          .hero-certificate-card {
-            padding: 20px 16px !important;
-          }
-          .hero-certificate-card .hero-badge {
-            font-size: 9px !important;
-            padding: 6px 12px !important;
-          }
-          .container > div > div > .stats-row {
-            gap: 20px !important;
-          }
           [class*="hero-highlight-pill"] {
             font-size: 11px !important;
             padding: 6px 12px !important;
@@ -651,79 +481,6 @@ export default function Hero() {
           box-shadow: 0 8px 24px rgba(0,0,0,0.15);
         }
 
-        .hero-certificate-card {
-          background: linear-gradient(145deg, #FFFCF5, #FAF7F0);
-          border: 1px solid rgba(201,168,76,0.35);
-          border-radius: 24px;
-          padding: 38px 36px;
-          position: relative;
-          overflow: hidden;
-          box-shadow: 0 35px 85px rgba(2, 6, 12, 0.6), 0 0 0 1px rgba(255,255,255,0.9) inset;
-          transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .hero-certificate-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, var(--gold-700), var(--gold-300), var(--gold-700));
-        }
-        .hero-certificate-shine {
-          position: absolute;
-          top: -50%;
-          right: -30%;
-          width: 300px;
-          height: 300px;
-          background: radial-gradient(ellipse, rgba(201,168,76,0.055) 0%, transparent 70%);
-          border-radius: 50%;
-          pointer-events: none;
-        }
-
-        .valid-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px 12px;
-          background: rgba(34,197,94,0.08);
-          border: 1px solid rgba(34,197,94,0.22);
-          border-radius: 100px;
-          font-size: 9px;
-          font-weight: 700;
-          color: #15803d;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-        .valid-badge-dot {
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          background: #22c55e;
-          animation: pulse-dot 1.8s ease-in-out infinite;
-        }
-
-        .card-award-icon-wrapper {
-          width: 76px;
-          height: 76px;
-          margin: 0 auto 20px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.05));
-          border: 1px solid rgba(201,168,76,0.35);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 10px 28px rgba(201,168,76,0.15);
-          transition: all 0.3s;
-        }
-        .hero-certificate-card:hover .card-award-icon-wrapper {
-          transform: scale(1.05) rotate(-5deg);
-          box-shadow: 0 12px 32px rgba(201,168,76,0.25);
-          border-color: rgba(201,168,76,0.5);
-        }
-        .hero-certificate-card:hover .card-code-box {
-          border-color: rgba(201,168,76,0.35);
-        }
       `}</style>
     </section>
   );
