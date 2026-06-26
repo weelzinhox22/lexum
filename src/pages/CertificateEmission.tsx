@@ -6,7 +6,6 @@ import { LexumCertificate } from '../components/LexumCertificate';
 import AppSidebar from '../components/AppSidebar';
 import MobileMenuHeader from '../components/MobileMenuHeader';
 import { SidebarProvider } from '../contexts/SidebarContext';
-import '../certificate.css';
 import {
   Award,
   Lock,
