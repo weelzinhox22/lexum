@@ -257,8 +257,8 @@ export default function CertificateEmission() {
           <div
             style={{
               position: 'fixed',
-              top: 0,
-              left: '-1200px',
+              top: '-9999px',
+              left: 0,
               visibility: 'hidden',
               pointerEvents: 'none',
               zIndex: -1,
