@@ -234,7 +234,11 @@ export default function Hero() {
             }}>
               Formação complementar objetiva e de alto nível sobre benefícios previdenciários,
               qualidade de segurado e processos administrativos junto ao INSS.
-              Certificado digital de{' '}
+              <strong style={{
+                color: 'var(--gold-300)',
+                fontWeight: 600,
+              }}> São cursos de curta duração</strong>{' '}
+              com certificado digital de{' '}
               <strong style={{
                 color: 'var(--gold-300)',
                 fontWeight: 600,

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { Mail, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
 const navColumns = [
   {
@@ -84,8 +84,6 @@ export default function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 { Icon: Mail, text: 'contato@lexum.com.br' },
-                { Icon: MapPin, text: 'São Paulo, SP' },
-                { Icon: ShieldCheck, text: 'CNPJ: 00.000.000/0001-00' },
               ].map(({ Icon, text }) => (
                 <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <Icon size={13} style={{ color: 'var(--gold-600)', flexShrink: 0 }} />
@@ -201,30 +199,27 @@ export default function Footer() {
               © {new Date().getFullYear()} Lexum Formação Complementar. Todos os direitos reservados.
             </p>
             <div style={{ display: 'flex', gap: 24 }}>
-              {['Termos de Uso', 'Privacidade'].map((label) => (
-                <Link
-                  key={label}
-                  to="/"
-                  style={{
-                    fontSize: 12,
-                    color: 'var(--text-muted)',
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 4,
-                    transition: 'color 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--gold-400)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--text-muted)';
-                  }}
-                >
-                  {label}
-                  <ArrowUpRight size={10} />
-                </Link>
-              ))}
+              <Link
+                to="/privacy"
+                style={{
+                  fontSize: 12,
+                  color: 'var(--text-muted)',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  transition: 'color 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--gold-400)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--text-muted)';
+                }}
+              >
+                Privacidade
+                <ArrowUpRight size={10} />
+              </Link>
             </div>
           </div>
         </div>

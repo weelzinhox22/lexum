@@ -10,6 +10,7 @@ import ValidateCertificate from './pages/ValidateCertificate';
 import Profile from './pages/Profile';
 import CertificateEmission from './pages/CertificateEmission';
 import GeneralExam from './pages/GeneralExam';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/validate" element={<ValidateCertificate />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/certificate" element={<CertificateEmission />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
     </BrowserRouter>
   );
